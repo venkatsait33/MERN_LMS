@@ -1,5 +1,5 @@
-import { authApi } from '@/api/authApi';
-import authReducer from './authSlice';
+import { authApi } from '@/redux/rtkApi/authApi';
+import authReducer from './slice/authSlice';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({

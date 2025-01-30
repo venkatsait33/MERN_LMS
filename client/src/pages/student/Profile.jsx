@@ -11,34 +11,69 @@ import {
 } from "@/components/ui/dialog"
 import { Loader2 } from 'lucide-react';
 import Course from './Course';
+import { useLoadUserQuery, useUpdateUserMutation } from '@/redux/rtkApi/authApi';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const Profile = () => {
-    const isLoading = false;
-    const enrolledCourses = [1,2]
+    const [name, setName] = useState('')
+    const [profilePhoto, setProfilePhoto] = useState('')
+    const { data: loadUser, isLoading: userLoading, refetch } = useLoadUserQuery()
+    const [updateUser, { isLoading: updateUserLoading, data: updateUserData, isError: updateUserError, isSuccess }] = useUpdateUserMutation()
+
+    useEffect(() => {
+        if (isSuccess) {
+            refetch();
+            toast.success('Profile updated successfully')
+        }
+        if (updateUserError) {
+            toast.error('Error updating profile')
+        }
+    }, [updateUserData, updateUserError, isSuccess])
+
+    const onChangeHandler = (e) => {
+        const file = e.target.files?.[0]
+        if (file) setProfilePhoto(file)
+    }
+
+    if (userLoading) return (<>
+        <LoadingSpinner />
+    </>)
+
+    const user = loadUser && loadUser.user;
+
+    const updateUserHandler = async () => {
+        const formData = new FormData()
+        formData.append('name', name)
+        formData.append('profilePhoto', profilePhoto)
+        await updateUser(formData)
+    }
+
     return (
         <div className='max-w-4xl mx-auto mt-20 md:px-0 '>
             <h1 className='text-2xl font-bold text-center md:text-left'>Profile</h1>
             <div className='flex flex-col items-center gap-8 md:flex-row md:items-start'>
                 <div className='flex flex-col items-center'>
                     <Avatar className='w-24 h-24 mb-4 md:h-32 md:w-32'>
-                        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                        <AvatarImage src={user.photoUrl || "https://github.com/shadcn.png"} alt="@shadcn" />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                 </div>
                 <div>
                     <div className='mb-2'>
                         <h1 className='font-semibold text-gray-900 dark:text-gray-100'>
-                            Name: <span className='ml-2 font-normal text-gray-700 dark:text-gray-300'>Student Name</span>
+                            Name: <span className='ml-2 font-normal text-gray-700 dark:text-gray-300'>{user.name}</span>
                         </h1>
                     </div>
                     <div className='mb-2'>
                         <h1 className='font-semibold text-gray-900 dark:text-gray-100'>
-                            Email: <span className='ml-2 font-normal text-gray-700 dark:text-gray-300'>Student@g.com</span>
+                            Email: <span className='ml-2 font-normal text-gray-700 dark:text-gray-300'>{user.email}</span>
                         </h1>
                     </div>
                     <div className='mb-2'>
                         <h1 className='font-semibold text-gray-900 dark:text-gray-100'>
-                            Role: <span className='ml-2 font-normal text-gray-700 dark:text-gray-300'>Student </span>
+                            Role: <span className='ml-2 font-normal text-gray-700 dark:text-gray-300'>{user.role.toUpperCase()} </span>
                         </h1>
                     </div>
                     <div>
@@ -56,19 +91,19 @@ const Profile = () => {
                                 <div className='grid gap-4 py-4'>
                                     <div className='grid items-center grid-cols-4 gap-4'>
                                         <label htmlFor="">Name</label>
-                                        <input type="text" name="" placeholder='Name' className='col-span-3 ' />
+                                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Name' className='col-span-3 ' />
 
                                     </div>
                                     <div className='grid items-center grid-cols-4 gap-4'>
                                         <label htmlFor="">Profile photo</label>
-                                        <input type="file" name="" accept='image/*' className='col-span-3 ' />
+                                        <input type="file" onChange={(e) => onChangeHandler(e)} accept='image/*' className='col-span-3 ' />
 
                                     </div>
                                 </div>
                                 <DialogFooter>
-                                    <Button>
+                                    <Button disable={updateUserLoading} onClick={updateUserHandler}>
                                         {
-                                            isLoading ? (<>
+                                            updateUserLoading ? (<>
                                                 <Loader2 className='w-4 h-4 mr-2 animate-spin' />
                                             </>) : "Save Changes"
                                         }
@@ -82,13 +117,13 @@ const Profile = () => {
             </div>
             <div>
                 {
-                    enrolledCourses.length === 0 ? "" : <h1>Courses you&apos;re  Enrolled in</h1>
+                    user.enrolledCourses.length === 0 ? "" : <h1>Courses you&apos;re  Enrolled in</h1>
                 }
 
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
                     {
-                        enrolledCourses.length === 0 ? <h1>You haven&apos;t enrolled any courses</h1> : (
-                            enrolledCourses.map((course, index) => <Course key={index} />)
+                        user.enrolledCourses.length === 0 ? <h1>You haven&apos;t enrolled any courses</h1> : (
+                            user.enrolledCourses.map((course) => <Course key={course.id} />)
                         )
                     }
                 </div>

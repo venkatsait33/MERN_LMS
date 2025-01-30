@@ -1,4 +1,4 @@
-import { Menu, School } from 'lucide-react'
+import { Loader2, Menu, School } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -19,15 +19,33 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
-
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { ModeToggle } from './ThemeToggle';
 import { Separator } from '@radix-ui/react-dropdown-menu';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useLogOutUserMutation } from '@/redux/rtkApi/authApi';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
+import { useSelector } from 'react-redux';
 
-const user = true;
+
 
 const Navbar = () => {
+    const { user } = useSelector(store => store.auth)
+    const [logOutUser, { isSuccess, isLoading, }] = useLogOutUserMutation()
+    const navigate = useNavigate()
+
+    const handleLogout = async () => {
+        await logOutUser()
+    }
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success('Logout Successfully')
+            navigate('/')
+        }
+    }, [isSuccess]);
+
 
     return (
         <div className='h-16 dark:bg-[#0a0a0a] bg-white border-b dark:border-b-gray-800 border-b-gray-200 fixed top-0 left-0 right-0 z-10 duration-300   '>
@@ -45,15 +63,19 @@ const Navbar = () => {
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Avatar>
-                                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                                            <AvatarImage src={user?.photoUrl || "https://github.com/shadcn.png"} alt="@shadcn" />
                                             <AvatarFallback>CN</AvatarFallback>
                                         </Avatar>
                                     </DropdownMenuTrigger>
-                                    <DropdownMenuContent className="w-56">                                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                    <DropdownMenuContent className="w-56">
+                                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuItem>
-                                            Dashboard
-                                        </DropdownMenuItem>
+                                        {
+                                            user.role === 'instructor' && (<DropdownMenuItem>
+                                                Dashboard
+                                            </DropdownMenuItem>)
+                                        }
+
                                         <DropdownMenuSeparator />
                                         <DropdownMenuGroup>
                                             <DropdownMenuItem>
@@ -69,15 +91,27 @@ const Navbar = () => {
                                         </DropdownMenuGroup>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem>
-                                            Log out
+                                            <button onClick={() => handleLogout()} >
+                                                {
+                                                    isLoading ? <Loader2 /> :
+                                                        "Log Out"
+                                                }
+                                            </button>
+
                                         </DropdownMenuItem>
 
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </div>
                         </> : <div className='flex items-center gap-10 '>
-                            <Button variant="outline">Login</Button>
-                            <Button>SignUp</Button>
+                            <Link to='login'>
+
+                                <Button variant="outline">Login</Button>
+                            </Link>
+                            <Link to='login'>
+
+                                <Button>SignUp</Button>
+                            </Link>
                         </div>
                     }
                     <ModeToggle />
@@ -92,17 +126,17 @@ const Navbar = () => {
                     <h1>E-Learning</h1>
                 </div>
 
-                <MobileNavbar />
+                <MobileNavbar user={user} />
             </div>
 
-        </div>
+        </div >
     )
 }
 
 export default Navbar
 
-const MobileNavbar = () => {
-    const role = 'instructor'
+const MobileNavbar = ({ user }) => {
+    const role = user
     return (
         <>
             <>

@@ -1,7 +1,7 @@
 import { User } from "../models/user.model.js";
 import bcrypt from 'bcryptjs'
 import { generateToken } from "../utils/generateToken.js";
-import { deleteMediaFromCloudinary, uploadMedia } from "../cloudinary.js";
+import { deleteMediaFromCloudinary, uploadMedia } from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
     try {
@@ -83,13 +83,11 @@ export const updateProfile = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User does not exist', success: false })
         }
-
         // extract public id of the preves image if it exists
         if (user.photoUrl) {
             const publicId = user.photoUrl.split('/').pop().split('.')[0] // extracting the public id from the url of the user
             deleteMediaFromCloudinary(publicId)
         }
-
         // upload new image to cloudinary
         const cloudResponse = await uploadMedia(profilePhoto.path)
 
@@ -104,8 +102,6 @@ export const updateProfile = async (req, res) => {
             user: updatedUser,
             message: "Profile updated successfully."
         })
-
-
     } catch (error) {
         console.log(error);
         res.status(500).json({ success: false, message: 'Failed to update profile' })

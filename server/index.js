@@ -3,12 +3,14 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./database/db.js";
 import userRouter from "./routes/user.route.js";
+import courseRoute from './routes/course.route.js'
 import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
 connectDB();
 const PORT = process.env.PORT || 8080;
+
 
 //server middlewares
 app.use(express.json());
@@ -20,6 +22,8 @@ app.use(cors({
 
 //apis
 app.use('/api/v1/user', userRouter)
+app.use('/api/v1/course', courseRoute)
+
 
 app.use('/home', (req, res) => {
     res.status(200).json({ message: 'Welcome to the home page' });

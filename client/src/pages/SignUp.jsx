@@ -63,9 +63,9 @@ const SignUp = () => {
             toast.success(registerData.message || "Registration Successful");
         }
 
-        if (loginData && loginIsSuccess) {
-            toast.success(loginData.message || "Login Successful");
-            navigate('/')
+        if (loginIsSuccess && loginData) {
+            toast.success(loginData.message || "Login successful.");
+            navigate("/");
         }
 
         if (registerError) {

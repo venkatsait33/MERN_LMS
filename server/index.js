@@ -5,6 +5,7 @@ import connectDB from "./database/db.js";
 import userRouter from "./routes/user.route.js";
 import courseRoute from './routes/course.route.js'
 import cookieParser from "cookie-parser";
+import mediaRoute from "./routes/media.route.js";
 
 dotenv.config();
 const app = express();
@@ -23,6 +24,7 @@ app.use(cors({
 //apis
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/course', courseRoute)
+app.use('/api/v1/media', mediaRoute)
 
 
 app.use('/home', (req, res) => {

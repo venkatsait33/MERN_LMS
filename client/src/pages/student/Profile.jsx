@@ -56,24 +56,24 @@ const Profile = () => {
             <div className='flex flex-col items-center gap-8 md:flex-row md:items-start'>
                 <div className='flex flex-col items-center'>
                     <Avatar className='w-24 h-24 mb-4 md:h-32 md:w-32'>
-                        <AvatarImage src={user.photoUrl || "https://github.com/shadcn.png"} alt="@shadcn" />
+                        <AvatarImage src={user?.photoUrl || "https://github.com/shadcn.png"} alt="@shadcn" />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                 </div>
                 <div>
                     <div className='mb-2'>
                         <h1 className='font-semibold text-gray-900 dark:text-gray-100'>
-                            Name: <span className='ml-2 font-normal text-gray-700 dark:text-gray-300'>{user.name}</span>
+                            Name: <span className='ml-2 font-normal text-gray-700 dark:text-gray-300'>{user?.name}</span>
                         </h1>
                     </div>
                     <div className='mb-2'>
                         <h1 className='font-semibold text-gray-900 dark:text-gray-100'>
-                            Email: <span className='ml-2 font-normal text-gray-700 dark:text-gray-300'>{user.email}</span>
+                            Email: <span className='ml-2 font-normal text-gray-700 dark:text-gray-300'>{user?.email}</span>
                         </h1>
                     </div>
                     <div className='mb-2'>
                         <h1 className='font-semibold text-gray-900 dark:text-gray-100'>
-                            Role: <span className='ml-2 font-normal text-gray-700 dark:text-gray-300'>{user.role.toUpperCase()} </span>
+                            Role: <span className='ml-2 font-normal text-gray-700 dark:text-gray-300'>{user?.role.toUpperCase()} </span>
                         </h1>
                     </div>
                     <div>
@@ -91,7 +91,7 @@ const Profile = () => {
                                 <div className='grid gap-4 py-4'>
                                     <div className='grid items-center grid-cols-4 gap-4'>
                                         <label htmlFor="">Name</label>
-                                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Name' className='col-span-3 ' />
+                                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Name' className='col-span-3 text-black' />
 
                                     </div>
                                     <div className='grid items-center grid-cols-4 gap-4'>
@@ -117,13 +117,13 @@ const Profile = () => {
             </div>
             <div>
                 {
-                    user.enrolledCourses.length === 0 ? "" : <h1>Courses you&apos;re  Enrolled in</h1>
+                    user?.enrolledCourses?.length === 0 ? "" : <h1>Courses you&apos;re  Enrolled in</h1>
                 }
 
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
                     {
-                        user.enrolledCourses.length === 0 ? <h1>You haven&apos;t enrolled any courses</h1> : (
-                            user.enrolledCourses.map((course) => <Course key={course.id} />)
+                        user?.enrolledCourses?.length === 0 ? <h1>You haven&apos;t enrolled any courses</h1> : (
+                            user?.enrolledCourses?.map((course) => <Course key={course.id} />)
                         )
                     }
                 </div>

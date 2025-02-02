@@ -4,8 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useEditCourseMutation, useGetCourseByIdQuery } from "@/redux/rtkApi/courseApi";
-import { Loader2 } from "lucide-react";
+import { useDeleteCourseMutation, useEditCourseMutation, useGetCourseByIdQuery, usePublishCourseMutation } from "@/redux/rtkApi/courseApi";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
@@ -26,6 +26,9 @@ const EditAddedCourse = () => {
     const navigate = useNavigate()
     const [editCourse, { isLoading, data, error, isSuccess }] = useEditCourseMutation()
     const { data: getCourseBYIdData, isLoading: getDataByIdLoading, refetch } = useGetCourseByIdQuery(courseId)
+
+    const [publishCourse, { data: publishData, error: publishError, isSuccess: publishIsSuccess }] = usePublishCourseMutation()
+    const [deleteCourse, { isSuccess: deleteSuccess, error: deleteError }] = useDeleteCourseMutation()
 
 
     useEffect(() => {
@@ -102,26 +105,54 @@ const EditAddedCourse = () => {
 
     if (getDataByIdLoading) return <h1>Loading......</h1>
 
-    const isPublished = false;
+    const publishStatusHandler = async (action) => {
+        try {
+            const response = await publishCourse({ courseId, query: action })
+            if (response.data) {
+                refetch()
+                toast.success("course published successfully")
+            }
+        } catch (error) {
+            toast.error("course publish failed")
+
+        }
+    }
+
+    const deleteCourseHandler = async () => {
+        try {
+            const response = await deleteCourse(courseId)
+            if (response.data) {
+                toast.success("course deleted successfully")
+                navigate("/admin/course")
+            }
+        } catch (error) {
+            toast.error("course delete failed")
+
+        }
+    }
     return (
         <div >
             <Card>
-                <CardHeader className='flex flex-row items-center justify-between'>
-                    <div>
-                        <CardTitle>
-                            Basic course information
-                        </CardTitle>
-                        <CardDescription>
-                            Make changes to your course here. Click save the changes when you are done.
-                        </CardDescription>
+                <CardHeader className='flex flex-row items-center justify-between gap-4'>
+                    <div className="flex gap-4 md:items-center max-sm:flex-col">
+                       
+                        <div>
+                            <CardTitle>
+                                Basic course information
+                            </CardTitle>
+                            <CardDescription>
+                                Make changes to your course here. Click save the changes when you are done.
+                            </CardDescription>
+                        </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <Button variant='outline' >
+                    
+                    <div className="flex items-center gap-2 max-sm:flex-col">
+                        <Button disabled={getCourseBYIdData?.course.lectures.length === 0} variant='outline' onClick={() => publishStatusHandler(getCourseBYIdData?.course.isPublished ? "false" : "true")} >
                             {
-                                isPublished ? "Unpublish" : "Publish"
+                                getCourseBYIdData?.course.isPublished ? "Unpublish" : "Publish"
                             }
                         </Button>
-                        <Button>
+                        <Button onClick={deleteCourseHandler}>
                             Remove Course
                         </Button>
                     </div>

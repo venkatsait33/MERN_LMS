@@ -29,6 +29,7 @@ const CreateLecture = () => {
         if (isSuccess) {
             refetch()
             toast.success("Lecture created successfully")
+            setLectureTitle("")
         }
     }, [isSuccess, error])
 
@@ -37,8 +38,8 @@ const CreateLecture = () => {
 
 
     return (
-        <div className="flex flex-col ">
-            <div className="flex-1 mx-10 ">
+        <div className="flex flex-col px-4 py-4 max-md:mt-20 ">
+            <div className="flex-1 mx-4">
                 <div className="mb-4">
                     <h1 className="text-2xl font-bold">Lets add lecture,for your new course</h1>
                     <p className="mt-2 text-sm text-gray-500">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero similique illo inventore nemo iste reiciendis.</p>
@@ -66,7 +67,7 @@ const CreateLecture = () => {
                 </div>
             </div>
 
-            <div className="">
+            <div className="mt-6">
 
 
                 {lectureLoading ? (

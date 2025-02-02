@@ -1,7 +1,17 @@
 import { ChartNoAxesColumn, SquareLibrary } from "lucide-react"
-import { Link, Outlet } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { Link, Outlet, useNavigate } from "react-router-dom"
 
 const Sidebar = () => {
+
+    const { user } = useSelector(store => store.auth)
+
+    const navigate = useNavigate()
+
+    if (!user) {
+        navigate('/')
+    }
+
     return (
         <div className="flex ">
             <div className='hidden  lg:block w-[12%]  space-y-8 border-r border-r-gray-300 dark:border-r-gray-700 bg-[rgb(240,240,240)] dark:bg-black p-5 sticky top-0 h-screen'>

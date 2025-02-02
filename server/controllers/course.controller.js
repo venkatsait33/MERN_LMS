@@ -1,5 +1,6 @@
 import { Course } from "../models/course.model.js";
-import { deleteMediaFromCloudinary, uploadMedia } from "../utils/cloudinary.js";
+import { Lecture } from "../models/lecture.model.js";
+import { deleteMediaFromCloudinary, deleteVideoFromCloudinary, uploadMedia } from "../utils/cloudinary.js";
 
 export const createCourse = async (req, res) => {
     try {
@@ -88,6 +89,37 @@ export const getCourseById = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: error.message })
+        return res.status(500).json({ message: "failed to fetch course" })
+    }
+}
+
+export const deleteCourse = async (req, res) => {
+    try {
+        const { courseId } = req.params;
+        const course = await Course.findByIdAndDelete(courseId);
+        const lectureId = course.lectures
+        const lecture = await Lecture.findByIdAndDelete(lectureId);
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found', success: false })
+        }
+        if (!lecture) {
+            return res.status(404).json({ message: "Lecture not found" })
+        }
+        // delete the video from cloudinary
+        if (lecture.publicId) {
+            await deleteVideoFromCloudinary(lecture.publicId);
+        }
+        // remove the lecture id reference  from the course
+        await Course.updateOne({ lectures: lectureId },
+            // find the course that has the lecture id
+            { $pull: { lectures: lectureId } }
+            // remove the lecture id from the lectures array
+        )
+
+        return res.status(200).json({ message: 'Course deleted successfully', success: true })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "failed to delete course" })
     }
 }

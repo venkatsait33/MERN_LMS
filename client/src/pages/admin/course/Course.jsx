@@ -28,7 +28,7 @@ const Course = () => {
     if (isLoading) return <div>Loading...</div>
 
     return (
-        <div className='flex flex-col w-full h-full p-4 '>
+        <div className='flex flex-col w-full h-full p-4 max-md:mt-24 md:px-4 md:py-4'>
             <div>
                 <Link to='create'>
                     <Button>

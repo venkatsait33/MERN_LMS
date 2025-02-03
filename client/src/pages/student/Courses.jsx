@@ -1,7 +1,10 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import Course from "./Course";
+import { useGetPublishedCoursesQuery } from "@/redux/rtkApi/courseApi";
 const Courses = () => {
-    const isLoading = false;
+    const { data, isLoading, isError } = useGetPublishedCoursesQuery()
+    if (isError) return <h1>Some Error occurred while fetching courses.</h1>
+
     return (
         <div className='bg-gray-50'>
             <div className='p-6 mx-auto max-w-7xl'>
@@ -11,8 +14,8 @@ const Courses = () => {
                         isLoading ? Array.from({ length: 8 }).map((_, i) => (
                             <CourseSkeleton key={i} />
                         )) : (
-                            Array.from({ length: 8 }).map((_, i) => (
-                                <Course key={i} />
+                            data?.courses && data.courses.map((course, i) => (
+                                <Course key={i} course={course} />
                             ))
 
                         )

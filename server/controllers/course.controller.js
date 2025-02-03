@@ -79,7 +79,7 @@ export const editCourse = async (req, res) => {
 
 export const getCourseById = async (req, res) => {
     try {
-        const courseId = req.params.courseId;
+        const {courseId} = req.params;
         const course = await Course.findById(courseId);
         if (!course) {
             return res.status(404).json({ message: 'Course not found', success: false })
@@ -121,5 +121,24 @@ export const deleteCourse = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "failed to delete course" })
+    }
+}
+
+export const getPublishedCourses = async (_, res) => {
+    try {
+        const courses = await Course.find({ isPublished: true }).populate({ path: "creator", select: "name photoUrl" });
+        if (!courses) {
+            return res.status(404).json({
+                message: "Course not found"
+            })
+        }
+        return res.status(200).json({
+            courses,
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "Failed to get published courses"
+        })
     }
 }

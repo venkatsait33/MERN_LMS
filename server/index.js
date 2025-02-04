@@ -7,6 +7,7 @@ import courseRoute from './routes/course.route.js'
 import cookieParser from "cookie-parser";
 import mediaRoute from "./routes/media.route.js";
 import purchaseCourseRoute from "./routes/purchaseCourse.route.js";
+import courseProgress from './routes/courseProgress.route.js'
 
 dotenv.config();
 const app = express();
@@ -27,6 +28,7 @@ app.use('/api/v1/user', userRouter)
 app.use('/api/v1/course', courseRoute)
 app.use('/api/v1/media', mediaRoute)
 app.use('/api/v1/purchase', purchaseCourseRoute)
+app.use('/api/v1/progress', courseProgress)
 
 
 app.use('/home', (req, res) => {

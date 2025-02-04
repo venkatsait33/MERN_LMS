@@ -30,6 +30,9 @@ app.use('/api/v1/media', mediaRoute)
 app.use('/api/v1/purchase', purchaseCourseRoute)
 app.use('/api/v1/progress', courseProgress)
 
+// to run the webhook for stripe payment
+// stripe listen --forward-to http://localhost:8080/api/v1/purchase/webhook
+
 
 app.use('/home', (req, res) => {
     res.status(200).json({ message: 'Welcome to the home page' });

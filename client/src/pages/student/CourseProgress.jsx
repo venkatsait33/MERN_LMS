@@ -2,7 +2,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { useGetCourseProgressQuery, useMarkCourseAsCompletedMutation, useMarkCourseAsInCompletedMutation, useUpdateLectureProgressMutation } from "@/redux/rtkApi/courseProgressApi";
-
 import { CheckCircle, CheckCircle2, CirclePlay } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -42,6 +41,9 @@ const CourseProgress = () => {
 
   const { courseDetails, progress, completed } = data.data;
   const { courseTitle } = courseDetails;
+  
+  console.log(courseDetails);
+  
 
   // initialze the first lecture is not exist
   const initialLecture =

@@ -51,7 +51,7 @@ const CourseDetails = () => {
                                 Course Content
                             </CardTitle>
                             <CardDescription>
-                                4 lectures
+                                { course?.lectures?.length} lectures
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-3">

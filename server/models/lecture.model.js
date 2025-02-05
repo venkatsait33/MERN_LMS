@@ -13,9 +13,12 @@ const LectureSchema = new mongoose.Schema({
     },
     isPreviewFree: {
         type: Boolean,
+    },
+    videoLink: {
+        type: String,
     }
 }, {
     timestamps: true
 })
 
-export const Lecture =  mongoose.model('Lecture', LectureSchema);
+export const Lecture = mongoose.model('Lecture', LectureSchema);

@@ -40,7 +40,7 @@ const CourseDetails = () => {
                     <p>Students enrolled: {course?.enrolledStudents?.length}</p>
                 </div>
             </div>
-            <div className='flex flex-col items-center justify-between px-4 mx-auto my-5 max-w-7xl md:px-8 lg:flex-row'>
+            <div className='flex flex-col items-center justify-between gap-4 px-4 mx-auto my-5 max-w-7xl md:px-8 lg:flex-row'>
                 <div className='w-full space-y-5 lg:w-1/2'>
                     <h1 className='text-xl font-bold md:text-3xl'>Description</h1>
                     <p className='text-sm' dangerouslySetInnerHTML={{ __html: course?.description }} />
@@ -76,7 +76,7 @@ const CourseDetails = () => {
                         <CardContent className="flex flex-col p-4">
                             <div className='w-full mb-4 aspect-video'>
                                 <ReactPlayer width="100%" height="100%"
-                                    url={course?.lectures[0].videoUrl} />
+                                    url={course?.lectures[0]?.videoUrl || course?.lectures?.videoLink} />
                             </div>
                             <h1>lecture title</h1>
 

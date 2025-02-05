@@ -6,30 +6,31 @@ import { Progress } from "@/components/ui/progress"
 import { Switch } from "@/components/ui/switch"
 import { useEditLecturesMutation, useGetLectureByIdQuery, useRemoveLectureMutation } from "@/redux/rtkApi/courseApi"
 import axios from "axios"
-import {  Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
 
 const AddLecture = () => {
     const MEDIA_API = import.meta.env.VITE_BACKEND_URL_UPLOAD_VIDEO
-    
+
     const navigate = useNavigate()
     const params = useParams()
     const { courseId, lectureId } = params
-    
+
     const [lectureTitle, setLectureTitle] = useState('')
     const [videoInfo, setVideoInfo] = useState(null)
+    const [videoLink, setVideoLink] = useState('')
     const [mediaProgress, setMediaProgress] = useState(false)
     const [uploadProgress, setUploadProgress] = useState(0)
     const [isPreviewFree, setIsPreviewFree] = useState(false)
     const [btnDisable, setBtnDisable] = useState(true)
-    
-    
+
+
     const [editLectures, { data, isLoading, error, isSuccess }] = useEditLecturesMutation()
-    
+
     const [removeLecture, { data: removeData, isLoading: removeLoading, error: removeError, isSuccess: removeSuccess }] = useRemoveLectureMutation()
-    
+
     const { data: lectureData, isLoading: lectureLoading } = useGetLectureByIdQuery(lectureId)
 
     {
@@ -43,6 +44,7 @@ const AddLecture = () => {
             setLectureTitle(lecture.lectureTitle)
             setIsPreviewFree(lecture.isPreviewFree)
             setVideoInfo(lecture.videoInfo)
+            setVideoLink(lecture.videoLink)
         }
     }, [lecture])
 
@@ -76,7 +78,7 @@ const AddLecture = () => {
 
     const editLectureHandler = async () => {
         await editLectures({
-            lectureTitle, videoInfo, courseId, lectureId, isPreviewFree
+            lectureTitle, videoInfo, courseId, lectureId, isPreviewFree, videoLink
         })
     }
 
@@ -103,7 +105,7 @@ const AddLecture = () => {
         <div>
             <Card>
                 <CardHeader CardTitle='flex justify-between'>
-                    
+
                     <div>
                         <CardTitle>
                             Edit Lecture
@@ -131,7 +133,11 @@ const AddLecture = () => {
                     <div>
                         <Label>Video <span className="text-red-500">*</span></Label>
                         <Input type="file" onChange={fileChangeHandler} accept="video/*" className="w-fit" />
-                     
+
+                    </div>
+                    <div>
+                        <Label>Youtube Video Link or any other video link</Label>
+                        <Input type="text" value={videoLink} onChange={(e) => setVideoLink(e.target.value)} placeholder="Ex: https://www.youtube.com/watch?v=1" />
                     </div>
                     <div className="flex items-center my-5 space-x-2">
                         <Switch checked={isPreviewFree} onCheckedChange={setIsPreviewFree} id="video-free" />

@@ -14,7 +14,7 @@ const Sidebar = () => {
 
     return (
         <div className="flex ">
-            <div className='hidden  lg:block w-[12%]  space-y-8 border-r border-r-gray-300 dark:border-r-gray-700 bg-[rgb(240,240,240)] dark:bg-black p-5 sticky top-0 h-screen'>
+            <div className='hidden  lg:block w-[12%]  space-y-8 border-r border-r-gray-300 dark:border-r-gray-700 p-5 sticky top-0 h-screen'>
                 <div className="mt-16 space-y-4 ">
                     <Link to='dashboard' className="flex items-center gap-2">
                         <ChartNoAxesColumn size={22} />
@@ -26,7 +26,7 @@ const Sidebar = () => {
                     </Link>
                 </div>
             </div>
-            <div className="w-full md:p-24">
+            <div className="w-full md:p-24 ">
                 <Outlet />
             </div>
         </div>

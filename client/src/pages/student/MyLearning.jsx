@@ -1,21 +1,23 @@
+import { useLoadUserQuery } from "@/redux/rtkApi/authApi";
 import Course from "./Course";
 
 const MyLearning = () => {
-    const isLoading = false;
-    const myLearningCourses = [1]
+    const { data, isLoading } = useLoadUserQuery()
+    console.log(data);
+    
+    const myLearningCourses = data?.user?.enrolledCourses || []
     return (
-        <div className='max-w-4xl mx-auto mt-20 md:px-0'>
+        <div className='max-w-4xl px-4 mx-auto mt-20 md:px-0'>
 
-
-            <h1>My Learning</h1>
+            <h1 className="mb-4 text-xl font-bold md:text-2xl">My Learning</h1>
             <div>
                 {
                     isLoading ? <MyLearningSkeleton /> : myLearningCourses.length === 0 ? (<p>Your are not enrolled in any courses</p>) :
                         (
                             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                                 {
-                                    [1, 2].map((_, i) => (
-                                        <Course key={i} />
+                                    myLearningCourses.map((course, i) => (
+                                        <Course key={i} course={course} />
                                     ))
                                 }
                             </div>

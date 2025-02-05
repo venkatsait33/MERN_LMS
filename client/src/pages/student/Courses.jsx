@@ -6,7 +6,7 @@ const Courses = () => {
     if (isError) return <h1>Some Error occurred while fetching courses.</h1>
 
     return (
-        <div className='bg-gray-50'>
+        <div className='bg-gray-50 dark:bg-[#141414]'>
             <div className='p-6 mx-auto max-w-7xl'>
                 <h1 className='mt-10 text-3xl font-bold text-center'>Our Courses</h1>
                 <div className="grid grid-cols-1 gap-4 mt-10 md:grid-cols-2 lg:grid-cols-3">

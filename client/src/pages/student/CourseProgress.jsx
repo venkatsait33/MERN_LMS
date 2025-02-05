@@ -4,6 +4,7 @@ import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { useGetCourseProgressQuery, useMarkCourseAsCompletedMutation, useMarkCourseAsInCompletedMutation, useUpdateLectureProgressMutation } from "@/redux/rtkApi/courseProgressApi";
 import { CheckCircle, CheckCircle2, CirclePlay } from "lucide-react";
 import { useEffect, useState } from "react";
+import ReactPlayer from "react-player";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -42,8 +43,7 @@ const CourseProgress = () => {
   const { courseDetails, progress, completed } = data.data;
   const { courseTitle } = courseDetails;
   
-  console.log(courseDetails);
-  
+  console.log(courseDetails); 
 
   // initialze the first lecture is not exist
   const initialLecture =
@@ -94,8 +94,8 @@ const CourseProgress = () => {
         {/* Video section  */}
         <div className="flex-1 p-4 rounded-lg shadow-lg md:w-3/5 h-fit">
           <div>
-            <video
-              src={currentLecture?.videoUrl || initialLecture.videoUrl}
+            <ReactPlayer
+              url={currentLecture?.videoUrl || currentLecture?.videoLink || initialLecture?.videoUrl || initialLecture?.videoLink}
               controls
               className="w-full h-auto md:rounded-lg"
               onPlay={() =>

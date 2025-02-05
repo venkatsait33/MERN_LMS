@@ -7,7 +7,7 @@ const Course = ({ course }) => {
     console.log(course);
 
     return (
-        <Link to={`course-details/${course._id}`}>
+        <Link to={`/course-details/${course?._id}`}>
 
             <Card className="overflow-hidden transition-all duration-300 transform bg-white rounded-lg shadow-lg dark:bg-gray-800 hover:shadow-2xl hover:scale-105">
                 <div className='relative'>
@@ -17,7 +17,7 @@ const Course = ({ course }) => {
 
                 </div>
                 <CardContent className='px-5 py-4 space-y-3'>
-                    <h1 className='text-[16px] font-bold truncate hover:underline'>{course.courseTitle}</h1>
+                    <h1 className='text-[16px] font-bold truncate hover:underline'>{course?.courseTitle}</h1>
                     <div className='flex items-center justify-between gap-2'>
                         <div className='flex items-center gap-2'>
                             <Avatar className=''>

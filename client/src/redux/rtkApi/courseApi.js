@@ -58,10 +58,10 @@ export const courseApi = createApi({
 
         }),
         editLectures: builder.mutation({
-            query: ({ lectureTitle, videoInfo, isPreviewFree, courseId, lectureId }) => ({
+            query: ({ lectureTitle, videoInfo, isPreviewFree, videoLink,courseId, lectureId }) => ({
                 url: `/${courseId}/lecture/${lectureId}`,
                 method: 'POST',
-                body: { lectureTitle, videoInfo, isPreviewFree }
+                body: { lectureTitle, videoInfo, isPreviewFree, videoLink }
             })
         }),
         removeLecture: builder.mutation({
@@ -88,6 +88,28 @@ export const courseApi = createApi({
                 url: `/${courseId}`,
                 method: 'DELETE'
             }),
+        }),
+        getSearchCourses: builder.query({
+            query: ({ searchQuery, categories, sortByPrice }) => {
+                // Build query string
+                let queryString = `/search?query=${encodeURIComponent(searchQuery)}`
+
+                // append categories to query string
+                if (categories && categories.length > 0) {
+                    const categoriesString = categories.map(encodeURIComponent).join(",");
+                    queryString += `&categories=${categoriesString}`;
+                }
+
+                // Append sortByPrice is available
+                if (sortByPrice) {
+                    queryString += `&sortByPrice=${encodeURIComponent(sortByPrice)}`;
+                }
+
+                return {
+                    url: queryString,
+                    method: "GET",
+                }
+            }
         })
     })
 })
@@ -103,4 +125,5 @@ export const { useCreateCourseMutation,
     useGetLectureByIdQuery,
     usePublishCourseMutation,
     useDeleteCourseMutation,
-    useGetPublishedCoursesQuery } = courseApi
+    useGetPublishedCoursesQuery,
+    useGetSearchCoursesQuery } = courseApi

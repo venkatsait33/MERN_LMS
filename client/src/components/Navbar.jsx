@@ -27,8 +27,6 @@ import { useEffect } from 'react';
 import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 
-
-
 const Navbar = () => {
     const { user } = useSelector(store => store.auth)
     const [logOutUser, { isSuccess, isLoading, }] = useLogOutUserMutation()
@@ -71,7 +69,10 @@ const Navbar = () => {
                                         <DropdownMenuSeparator />
                                         {
                                             user.role === 'instructor' && (<DropdownMenuItem>
-                                                Dashboard
+                                                <Link to='/admin/dashboard'>
+
+                                                    Dashboard
+                                                </Link>
                                             </DropdownMenuItem>)
                                         }
 
@@ -135,7 +136,7 @@ const Navbar = () => {
 export default Navbar
 
 const MobileNavbar = ({ user }) => {
-    const role = user
+    const role = user?.role
     return (
         <>
             <>

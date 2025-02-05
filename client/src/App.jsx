@@ -14,6 +14,8 @@ import CreateLecture from './pages/admin/lecture/CreateLecture'
 import EditLecture from './pages/admin/lecture/EditLecture'
 import CourseDetails from './pages/student/CourseDetails'
 import CourseProgress from './pages/student/CourseProgress'
+import SearchPage from './pages/student/searchCourse/SearchPage'
+import { AdminRoute, AuthenticatedUser, ProtectedRoutes, PurchasedCourseProtectedRoute } from './components/ProtectedRoutes'
 
 const appRouter = createBrowserRouter([
   {
@@ -30,29 +32,55 @@ const appRouter = createBrowserRouter([
       {
         path: 'my-learning',
         element:
-          <MyLearning />
+          <ProtectedRoutes>
+            <MyLearning />
+          </ProtectedRoutes>
 
       },
       {
         path: 'profile',
-        element: <Profile />
+        element:
+          <ProtectedRoutes>
+            <Profile />
+          </ProtectedRoutes>
+      },
+      {
+        path: 'course/search',
+        element:
+          <ProtectedRoutes>
+            <SearchPage />
+          </ProtectedRoutes>
       },
       {
         path: 'course-details/:courseId',
-        element: <CourseDetails />
+        element:
+          <ProtectedRoutes>
+            <CourseDetails />
+          </ProtectedRoutes>
       },
       {
         path: '/course-progress/:courseId',
-        element: <CourseProgress />
+        element:
+          <ProtectedRoutes>
+            <PurchasedCourseProtectedRoute>
+              <CourseProgress />
+            </PurchasedCourseProtectedRoute>
+          </ProtectedRoutes>
 
       },
       {
         path: "login",
-        element: <SignUp />
+        element:
+          <AuthenticatedUser>
+            <SignUp />
+          </AuthenticatedUser>
       },
       {
         path: 'admin',
-        element: <Sidebar />,
+        element:
+          <AdminRoute>
+            <Sidebar />
+          </AdminRoute>,
         children: [
           {
             path: 'dashboard',

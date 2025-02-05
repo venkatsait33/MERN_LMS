@@ -1,5 +1,5 @@
 import express from 'express'
-import { createCourse, deleteCourse, editCourse, getCourseById, getCreatorCourses, getPublishedCourses } from '../controllers/course.controller.js'
+import { createCourse, deleteCourse, editCourse, getCourseById, getCreatorCourses, getPublishedCourses, searchCourse } from '../controllers/course.controller.js'
 import isAuthenticated from '../middlewares/isAuthenticated.js'
 import upload from '../utils/multier.js';
 import { createLecture, editLecture, getCourseLectures, getLectureById, removeLecture, togglePublishCourse } from '../controllers/lecture.controller.js';
@@ -7,8 +7,9 @@ import { createLecture, editLecture, getCourseLectures, getLectureById, removeLe
 const router = express.Router()
 
 router.route('/').get(isAuthenticated, getCreatorCourses);
+router.route('/search').get(isAuthenticated, searchCourse)
 router.route('/').post(isAuthenticated, createCourse);
-router.route('/published-courses').get(isAuthenticated, getPublishedCourses);
+router.route('/published-courses').get(getPublishedCourses);
 router.route('/:courseId').put(isAuthenticated, upload.single("courseThumbnail"), editCourse);
 router.route('/:courseId').get(isAuthenticated, getCourseById);
 router.route('/:courseId').patch(isAuthenticated, togglePublishCourse);

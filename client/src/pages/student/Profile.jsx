@@ -123,7 +123,7 @@ const Profile = () => {
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
                     {
                         user?.enrolledCourses?.length === 0 ? <h1>You haven&apos;t enrolled any courses</h1> : (
-                            user?.enrolledCourses?.map((course) => <Course key={course.id} />)
+                            user?.enrolledCourses?.map((course) => <Course key={course.id} course={course} />)
                         )
                     }
                 </div>

@@ -53,7 +53,7 @@ export const logout = async (req, res) => {
         return res.status(200).cookie("token", "", { maxAge: 0 }).json({ success: true, message: 'Logged out successfully' })
     } catch (error) {
         console.log(error);
-       return res.status(500).json({ success: false, message: 'Failed to logout' })
+        return res.status(500).json({ success: false, message: 'Failed to logout' })
     }
 }
 
@@ -61,7 +61,7 @@ export const getUserProfile = async (req, res) => {
     try {
         const userId = req.id; // we get userId from the middleware isAuthenticated
 
-        const user = await User.findById(userId).select('-password');
+        const user = await User.findById(userId).select('-password').populate("enrolledCourses");
         if (!user) {
             return res.status(404).json({ message: 'User does not exist', success: false })
         }

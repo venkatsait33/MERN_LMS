@@ -27,7 +27,7 @@ export const authApi = createApi({
                 method: 'POST',
                 body: data
             }),
-            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+            async onQueryStarted(_, { queryFulfilled, dispatch }) {
                 try {
                     const result = await queryFulfilled
                     dispatch(userLogin({ user: result.data.user }))
@@ -55,7 +55,7 @@ export const authApi = createApi({
                 url: "profile",
                 method: "GET",
             }),
-            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+            async onQueryStarted(_, { queryFulfilled, dispatch }) {
                 try {
                     const result = await queryFulfilled
                     dispatch(userLogin({ user: result.data.user }))

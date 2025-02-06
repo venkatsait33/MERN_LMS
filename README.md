@@ -101,7 +101,7 @@ This project is **open-source** and available under the **MIT License**.
 
 ## 📩 Connect with Me  
 
-🔗 [LinkedIn](https://www.linkedin.com/in/your-profile) | ✉️ [Email](mailto:venkatsait33@gmail.com)  
+🔗 [LinkedIn]([https://www.linkedin.com/in/your-profile](https://www.linkedin.com/in/venkatsai-t/)) | ✉️ [Email](mailto:venkatsait33@gmail.com)  
 
 ---
 

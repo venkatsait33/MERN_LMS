@@ -5,7 +5,7 @@ export const generateToken = async (res, user, message) => {
         process.env.JWT_SECRET,
         { expiresIn: '1d' });
     return res.status(200).cookie('token', token, {
-        httpOnly: true, sameSite: 'none',
+        httpOnly: true, sameSite: 'None',
         secure: true,
         maxAge: 24 * 60 * 60 * 1000
     }).json({

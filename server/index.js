@@ -13,14 +13,13 @@ dotenv.config();
 const app = express();
 connectDB();
 const PORT = process.env.PORT || 8080;
-const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173"
-
 
 //server middlewares
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(cors({
-    origin: frontendUrl,
+    origin: process.env.FRONTEND_URL,
     credentials: true
 }));
 

@@ -3,7 +3,7 @@
   "name": "MERN_LMS",
   "builds": [
     {
-      "src": "./index.js",
+      "src": "*.js",
       "use": "@vercel/node"
     }
   ],

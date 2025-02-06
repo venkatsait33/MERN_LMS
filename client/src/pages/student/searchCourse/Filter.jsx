@@ -60,7 +60,7 @@ const Filter = ({ handleFilterChange }) => {
                 <h1 className='mb-2 font-bold'>CATEGORY</h1>
                 {
                     categories.map((category) => (
-                        <div className='flex items-center space-x-2' key={category.id}>
+                        <div className='flex items-center gap-2 space-y-1' key={category.id}>
                             <Checkbox id={category.id} onCheckedChange={() => handleCategoryChange(category.id)} />
                             <Label className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
                                 {category.label}

@@ -187,7 +187,17 @@ const EditAddedCourse = () => {
                                             <SelectItem value="Frontend Development">
                                                 Frontend Development
                                             </SelectItem>
-
+                                            <SelectItem value="Fullstack Development">
+                                                Fullstack Development
+                                            </SelectItem>
+                                            <SelectItem value="MERN Stack Development">
+                                                MERN Stack Development
+                                            </SelectItem>
+                                            <SelectItem value="Javascript">Javascript</SelectItem>
+                                            <SelectItem value="Python">Python</SelectItem>
+                                            <SelectItem value="Docker">Docker</SelectItem>
+                                            <SelectItem value="MongoDB">MongoDB</SelectItem>
+                                            <SelectItem value="HTML">HTML</SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>

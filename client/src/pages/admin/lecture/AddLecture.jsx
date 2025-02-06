@@ -12,7 +12,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
 
 const AddLecture = () => {
-    const MEDIA_API = import.meta.env.VITE_BACKEND_URL_UPLOAD_VIDEO
+    const MEDIA_API = import.meta.env.VITE_BACKEND_URL + "/api/v1/media"
 
     const navigate = useNavigate()
     const params = useParams()

@@ -28,11 +28,15 @@ const SearchPage = () => {
         setSortByPrice(price);
     }
     return (
-        <div className="p-4 mx-auto mt-8 max-w-7xl md:p-8">
+        <div className="w-[90%] p-4 mx-auto mt-8 md:p-8">
             <div className="my-6">
-                <h1 className="text-xl font-bold md:text-2xl">result for "{query}"</h1>
-                <p>Showing results for {""}
-                    <span className="italic font-bold text-blue-800">{query}</span></p>
+                {
+                    query && <div><h1 className="text-xl font-bold md:text-2xl">result for "{query}"</h1>
+                        <p>Showing results for {""}
+                            <span className="italic font-bold text-blue-800">{query}</span></p></div>
+                }
+
+
             </div>
             <div className="flex flex-col gap-10 lg:flex-row md:flow-row">
                 <Filter handleFilterChange={handleFilterChange} />

@@ -14,6 +14,7 @@ An advanced **Full-Stack E-Learning Platform** built with **MERN (MongoDB, Expre
 ✅ **Dark Mode & Mobile Responsive UI**  
 
 ### **Instructor/Admin Features**  
+✅ **Dashboard** (totalsales of cources, totalrevenu and course prices graph)  
 ✅ **Create & Manage Courses** (Upload Videos, Edit Lectures)  
 ✅ **Publish Courses** (Only if lectures are available)  
 ✅ **Delete Courses & Lectures** (Removes from Cloudinary)  

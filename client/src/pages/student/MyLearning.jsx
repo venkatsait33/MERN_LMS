@@ -3,7 +3,6 @@ import Course from "./Course";
 
 const MyLearning = () => {
     const { data, isLoading } = useLoadUserQuery()
-    console.log(data);
     
     const myLearningCourses = data?.user?.enrolledCourses || []
     return (

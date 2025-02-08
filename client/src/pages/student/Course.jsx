@@ -4,7 +4,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { Link } from 'react-router-dom';
 
 const Course = ({ course }) => {
-    console.log(course);
 
     return (
         <Link to={`/course-details/${course?._id}`}>

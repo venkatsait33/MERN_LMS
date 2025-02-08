@@ -48,8 +48,8 @@ const Navbar = () => {
         <div className='h-16 dark:bg-[#0a0a0a] bg-white border-b dark:border-b-gray-800 border-b-gray-200 fixed top-0 left-0 right-0 z-10 duration-300   '>
             <div className='items-center justify-between hidden px-2 py-4 pl-10 pr-10 mx-auto md:flex max-w-7xl'>
                 <div className='flex items-center gap-2'>
-                    <Link to='/'>
-                        <School size={"30"} />
+                    <Link to='/' className=''>
+                        <School size={"30"}  />
                     </Link>
                     <h1 className='hidden text-2xl font-extrabold md:block'>E-Learning</h1>
                 </div>

@@ -1,3 +1,5 @@
+import { Tooltip } from "@/components/ui/tooltip"
+import { TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip"
 import { ChartNoAxesColumn, SquareLibrary } from "lucide-react"
 import { useSelector } from "react-redux"
 import { Link, Outlet, useNavigate } from "react-router-dom"
@@ -14,15 +16,35 @@ const Sidebar = () => {
 
     return (
         <div className="flex ">
-            <div className='hidden  lg:block w-[12%]  space-y-8 border-r border-r-gray-300 dark:border-r-gray-700 p-5 sticky top-0 h-screen'>
-                <div className="mt-16 space-y-4 ">
-                    <Link to='dashboard' className="flex items-center gap-2">
-                        <ChartNoAxesColumn size={22} />
-                        <h1>Dashboard</h1>
+            <div className=' md:w-[12%] space-y-8 border-r border-r-gray-300 dark:border-r-gray-700 p-5 sticky top-0 h-screen'>
+                <div className="mt-16 space-y-8 ">
+                    <Link to='dashboard' className="flex items-center gap-2 pt-2">
+                        <div className="block md:hidden">
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger> <ChartNoAxesColumn size={22} /></TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Dashboard</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                        </div>
+                        <ChartNoAxesColumn size={22} className="hidden md:block" />
+                        <h1 className="hidden md:block">Dashboard</h1>
                     </Link>
                     <Link to='course' className="flex items-center gap-2">
-                        <SquareLibrary size={22} />
-                        <h1>Courses</h1>
+                        <div className="block md:hidden">
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger>  <SquareLibrary size={22} /></TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Courses</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                        </div>
+                        <SquareLibrary size={22} className="hidden md:block" />
+                        <h1 className="hidden md:block">Courses</h1>
                     </Link>
                 </div>
             </div>

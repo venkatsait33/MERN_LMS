@@ -17,8 +17,8 @@ const Dashboard = () => {
     const totalSales = purchasedCourse.length
 
     return (
-        <div className="flex items-center justify-center p-4 mx-auto ">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="flex items-center justify-center p-4 mx-auto max-md:mt-16 ">
+            <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 <Card className='transition-shadow duration-300 shadow-lg hover:shadow-xl'>
                     <CardHeader>
                         <CardTitle>

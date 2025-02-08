@@ -60,6 +60,28 @@ CLOUDINARY_API_SECRET=your_cloudinary_secret
 FRONTEND_URL= frontend-url
 
 ```
+
+Run the webhook server for stripe payment completion:  
+- download the stripe cli from the stripe site and save in a folder
+- run the stripe.exe file from the cmd and login with the stripe login
+
+```bash
+stripe login
+```
+
+```bash
+stripe login --interactive
+```
+```bash
+stripe login --api-key stripe-api-key
+```
+- it will generate a token for the project and saved for 90 days
+
+  ```bash
+  stripe listen --forward-to http://localhost:8080/api/v1/purchase/webhook
+  ```
+
+
 Run the server:  
 ```bash
 npm run dev
